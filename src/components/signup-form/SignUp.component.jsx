@@ -63,7 +63,7 @@ const SignUpForm = () => {
           required
           onChange={handleChange}
           name="email"
-          value={email}
+          value={displayName}
         />
 
         <FormInput
