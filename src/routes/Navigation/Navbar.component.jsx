@@ -6,12 +6,11 @@ import "./navigation.styles.scss";
 import crown from "../../assets/crown.svg";
 
 const Navbar = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-  // console.log(currentUser);
+  const { currentUser } = useContext(UserContext);
+
 
   const signOutHandler = async () => {
     await signOutUser();
-    setCurrentUser(null);
   };
 
   return (

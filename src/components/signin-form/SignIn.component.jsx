@@ -1,16 +1,12 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import {
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 
 import FormInput from "./../form-input/FormInput.component";
 import Button from "./../button/Button.component";
 import "./SignIn.styles.scss";
-import { confirmPasswordReset } from "firebase/auth";
-import { async } from "@firebase/util";
-import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
   email: "",
@@ -21,30 +17,19 @@ const SignIn = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  const { setCurrentUser } = useContext(UserContext);
-
   const resetForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormFields((formFields) => ({
-      ...formFields,
-      [name]: value,
-    }));
+  const signInWithGoogle = async () => {
+    await signInWithGooglePopup();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const { user } = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      setCurrentUser(user);
-      console.log(response);
+      await signInAuthUserWithEmailAndPassword(email, password);
       resetForm();
     } catch (error) {
       switch (error.code) {
@@ -60,13 +45,16 @@ const SignIn = () => {
     }
 
     resetForm();
-    // alert("button working");
   };
 
-  const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormFields((formFields) => ({
+      ...formFields,
+      [name]: value,
+    }));
   };
+
   return (
     <div className="sign-in-container">
       <h2>Already have an account?</h2>
