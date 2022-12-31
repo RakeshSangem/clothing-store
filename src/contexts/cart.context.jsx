@@ -22,7 +22,7 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
     (cartItem) => cartItem.id === cartItemToRemove.id
   );
 
-  //check if quantity is equal to q, if it is remove that itemfrom the cart
+  //check if quantity is equal to 1, if it is remove that itemfrom the cart
   if (existingCartItems.quantity === 1) {
     return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
   }
@@ -48,7 +48,7 @@ export const CartContext = createContext({
   cartCount: 0,
   cartTotal: 0,
 });
-
+  
 export const CartProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
